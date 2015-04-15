@@ -1,14 +1,21 @@
 (function () {
     var app = angular.module('angularDemo', []);
 
-    // 父层级
-    app.controller('InputCtrl', function ($scope) {
-        $scope.sharedObj = {};
-    });
-
-    // 子层级
-    app.controller('SonOfInputCtrl', function ($scope) {
-        $scope.sharedObj.inputValue = '听孩子的话';
+    app.directive('demoInput', function () {
+        return {
+            restrict: 'AE',
+            templateUrl: 'partials/demo-input.html',
+            scope: {
+                title: '@',
+                inputModel: '='
+            },
+            link: function (scope, element, attrs) {
+                console.log('title:', attrs.title);
+                element.on('click', function () {
+                    element.css('background-color', 'green');
+                });
+            }
+        };
     });
 
 })();

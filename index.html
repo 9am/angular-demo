@@ -9,18 +9,10 @@
 </head>
 <body>
 
-    <div ng-controller="InputCtrl">
-        <h2>Input</h2>
-        <!-- <input type="text" ng-model="sharedObj.inputValue" /> -->
-        <p ng-bind="sharedObj.inputValue"></p>
-
-        <div ng-controller="SonOfInputCtrl">
-            <h2>SonOfInput</h2>
-            <input type="text" ng-model="sharedObj.inputValue" />
-            <p ng-bind="sharedObj.inputValue"></p>
-        </div>
-
-    </div>
+    <div title="还是我"
+         input-model="inputValue"
+         demo-input>
+     </div>
 
 </body>
 </html>
