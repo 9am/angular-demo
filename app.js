@@ -2,32 +2,70 @@
     var app = angular.module('angularDemo', []);
 
     app.controller('MainCtrl', function ($scope) {
-        $scope.title = '点击展开'
-        $scope.text = '展开的内容'
+        $scope.expanders = [
+            {
+                title: '主题1',
+                text: '这里是内容1，内容很长很长很长很长很长很长'
+            },
+            {
+                title: '主题2',
+                text: '这里是内容2'
+            },
+            {
+                title: '主题3',
+                text: '这里是内容3，内容也很长很长很长很长很长很长'
+            }
+        ];
     });
 
     app.directive('expander', function () {
         return {
-            restrict: 'EA',// E,A,C,M
-            replace: true,// 是否替换指令所在的元素
-            transclude: true,//把原来元素中的内容提供到模板中
+            restrict: 'EA',
+            replace: true,
+            transclude: true,
+            require: '^?accordion',// 需要在accordion指令中找控制器，？找不到不会抛异常，^ 父中寻找
             scope: {
                 title: '=expanderTitle'
-                // false 现有的scope
-                // true 新scope
-                // {} 独立的scope, @ = &
             },
             template: ''
                 + '<div>'
                 +     '<div class="title" ng-click="toggle()">{{title}}</div>'
                 +     '<div class="body" ng-show="showMe" ng-transclude></div>'
                 + '</div>',
-            link: function (scope, element, attrs) {
+            link: function (scope, element, attrs, accordionController) {// 引入
                 scope.showMe = false;
+                accordionController.addExpander(scope);
 
                 scope.toggle = function () {
                     scope.showMe = !scope.showMe;
-                }
+                    accordionController.gotOpened(scope);
+                };
+            }
+        };
+    });
+
+    app.directive('accordion', function () {
+        return {
+            restrict: 'EA',
+            replace: true,
+            transclude: true,
+            template: '<div ng-transclude></div>',
+            controller: function () {
+                var expanders = [];
+
+                // 展开，关闭其它
+                this.gotOpened = function (selectedExpander) {
+                    angular.forEach(expanders, function (expander) {
+                        if (selectedExpander !== expander) {
+                            expander.showMe = false;
+                        }
+                    });
+                };
+
+                // 添加一个
+                this.addExpander = function (expander) {
+                    expanders.push(expander);
+                };
             }
         };
     });

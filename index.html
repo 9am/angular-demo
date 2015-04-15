@@ -24,11 +24,13 @@
 </head>
 <body ng-controller="MainCtrl">
 
-    <div class="expander"
-         expander-title="title"
-         expander>
-        {{text}}
-    </div>
+    <accordion>
+        <expander class="expander"
+            ng-repeat="expander in expanders"
+            expander-title="expander.title">
+            {{expander.text}}
+        </expander>
+    </accordion>
 
 </body>
 </html>
