@@ -1,21 +1,18 @@
 (function () {
     var app = angular.module('angularDemo', []);
 
-    app.controller('MainCtrl', function ($scope) {
-        $scope.expanders = [
-            {
-                title: '主题1',
-                text: '这里是内容1，内容很长很长很长很长很长很长'
-            },
-            {
-                title: '主题2',
-                text: '这里是内容2'
-            },
-            {
-                title: '主题3',
-                text: '这里是内容3，内容也很长很长很长很长很长很长'
-            }
-        ];
+    app.service('expanders', function ($http) {
+        this.requestData = $http.get('data/expander.json');
+    });
+
+    app.controller('MainCtrl', function ($scope, expanders) {
+        expanders.requestData
+            .success(function (data) {
+                $scope.expanders = data;
+            })
+            .error(function (data) {
+                // error
+            });
     });
 
     app.directive('expander', function () {
