@@ -7,19 +7,28 @@
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script src="app.js"></script>
     <style>
-        .red {
-            color: red;
-        };
+        .expander {
+            border: 1px solid black;
+            width: 250px;
+        }
+        .expander .title {
+            background-color: black;
+            color: white;
+            padding: .1em .3em;
+            cursor: pointer;
+        }
+        .expander .body {
+            padding: .1em .3em;
+        }
     </style>
 </head>
-<body>
+<body ng-controller="MainCtrl">
 
-    <ul ng-controller="sleepCtrl">
-        <li ng-repeat="item in list"
-            ng-class="{red: isEven(item)}">
-            {{item}}
-        </li>
-    </ul>
+    <div class="expander"
+         expander-title="title"
+         expander>
+        {{text}}
+    </div>
 
 </body>
 </html>
