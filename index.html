@@ -6,13 +6,20 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <script type="text/javascript" src="bower_components/angular/angular.js"></script>
     <script src="app.js"></script>
+    <style>
+        .red {
+            color: red;
+        };
+    </style>
 </head>
 <body>
 
-    <div title="还是我"
-         input-model="inputValue"
-         demo-input>
-     </div>
+    <ul ng-controller="sleepCtrl">
+        <li ng-repeat="item in list"
+            ng-class="{red: isEven(item)}">
+            {{item}}
+        </li>
+    </ul>
 
 </body>
 </html>
